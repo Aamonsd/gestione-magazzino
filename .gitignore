@@ -1,0 +1,11 @@
+# Cartelle di build
+bin/
+obj/
+
+# File di dati generati a runtime
+prodotti.json
+movimenti.json
+
+# File di Visual Studio
+.vs/
+*.user
