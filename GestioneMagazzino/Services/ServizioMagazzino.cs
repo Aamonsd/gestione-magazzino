@@ -94,6 +94,12 @@ namespace GestioneMagazzino.Services
         {
             repositoryProdotti.CaricaFile(PercorsoProdotti);
             repositoryMovimenti.CaricaFile(PercorsoMovimenti);
+            ContatoreMovimenti = 0;
+            foreach (var item in repositoryMovimenti.OttieniTutti())
+            {
+                int numero = int.Parse(item.Identificatore.Replace("MOV-", ""));
+                if (numero > ContatoreMovimenti) ContatoreMovimenti = numero;
+            }
         }
 
 
