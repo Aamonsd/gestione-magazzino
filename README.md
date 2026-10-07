@@ -84,3 +84,4 @@ I dati vengono salvati in `%LocalAppData%\GestioneMagazzino` (`prodotti.json` e 
 - Ricerca e filtri nelle tabelle.
 - Stato della voce selezionata nel menu gestito dal ViewModel invece che dalla View.
  
+
