@@ -13,6 +13,7 @@ Applicazione per la gestione di un magazzino: prodotti, movimenti di carico e sc
 - **Avvisi**: conferma del movimento registrato e avviso quando un prodotto scende sotto la soglia minima.
 - **Controlli sui dati**: codice prodotto duplicato, prezzo e quantità non validi, scorta insufficiente per uno scarico.
 - **Salvataggio automatico** su file JSON. Console e WPF leggono e scrivono gli stessi dati.
+  
 | Prodotti | Registra movimento | Storico movimenti |
 |---|---|---|
 | <img src="docs/Screenshots/prodotti.png" alt="Prodotti" width="270"> | <img src="docs/Screenshots/registra-movimenti.png" alt="Registra movimento" width="270"> | <img src="docs/Screenshots/storico.png" alt="Storico movimenti" width="270"> |
