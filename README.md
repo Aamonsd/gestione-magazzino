@@ -54,8 +54,8 @@ Il progetto è nato come applicazione console. Per aggiungere l'interfaccia graf
 Requisiti: Windows e .NET 10 SDK.
  
 ```
-git clone <URL-DEL-REPOSITORY>
-cd GestioneMagazzino
+git clone https://github.com/Aamonsd/gestione-magazzino.git
+cd gestione-magazzino
 ```
  
 Interfaccia desktop:
