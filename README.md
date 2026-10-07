@@ -15,7 +15,7 @@ Applicazione per la gestione di un magazzino: prodotti, movimenti di carico e sc
 - **Salvataggio automatico** su file JSON. Console e WPF leggono e scrivono gli stessi dati.
 | Prodotti | Registra movimento | Storico movimenti |
 |---|---|---|
-| ![Prodotti](docs/Screenshots/prodotti.png) | ![Registra movimento](docs/Screenshots/registra-movimento.png) | ![Storico movimenti](docs/Screenshots/storico.png) |
+| ![Prodotti](docs/Screenshots/prodotti.png) | ![Registra movimento](docs/Screenshots/registra-movimenti.png) | ![Storico movimenti](docs/Screenshots/storico.png) |
  
 ## Tecnologie
  
