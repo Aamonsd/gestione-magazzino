@@ -2,7 +2,7 @@
  
 Applicazione per la gestione di un magazzino: prodotti, movimenti di carico e scarico, controllo delle scorte minime. Lo stesso backend è usato da due interfacce, una console e una desktop in WPF.
  
-![Dashboard](docs/screenshots/dashboard.png)
+![Dashboard](docs/Screenshots/dashboard.png)
  
 ## Funzionalità
  
@@ -15,7 +15,7 @@ Applicazione per la gestione di un magazzino: prodotti, movimenti di carico e sc
 - **Salvataggio automatico** su file JSON. Console e WPF leggono e scrivono gli stessi dati.
 | Prodotti | Registra movimento | Storico movimenti |
 |---|---|---|
-| ![Prodotti](docs/screenshots/prodotti.png) | ![Registra movimento](docs/screenshots/registra-movimento.png) | ![Storico movimenti](docs/screenshots/storico.png) |
+| ![Prodotti](docs/Screenshots/prodotti.png) | ![Registra movimento](docs/Screenshots/registra-movimento.png) | ![Storico movimenti](docs/Screenshots/storico.png) |
  
 ## Tecnologie
  
