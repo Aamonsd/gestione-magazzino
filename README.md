@@ -1,51 +1,86 @@
 # Gestione Magazzino
-
-Applicazione console in C# per la gestione di un magazzino: prodotti, movimenti di carico/scarico e controllo automatico delle scorte minime.
-
-## Cosa fa
-
-- Aggiunta di nuovi prodotti al magazzino, con codice, nome, prezzo unitario e soglia minima di riordino
-- Registrazione dei movimenti di magazzino (carico e scarico), con aggiornamento automatico della quantità disponibile
-- Blocco automatico degli scarichi quando la quantità richiesta supera quella disponibile
-- Notifica automatica quando un prodotto scende sotto la soglia minima impostata
-- Storico completo di tutti i movimenti effettuati
-- Salvataggio e caricamento automatico dei dati su file, in modo che le informazioni non vadano perse alla chiusura del programma
-
+ 
+Applicazione per la gestione di un magazzino: prodotti, movimenti di carico e scarico, controllo delle scorte minime. Lo stesso backend è usato da due interfacce, una console e una desktop in WPF.
+ 
+![Dashboard](docs/screenshots/dashboard.png)
+ 
+## Funzionalità
+ 
+- **Dashboard**: numero di prodotti, prodotti sotto soglia, valore totale del magazzino, movimenti del giorno, elenco dei prodotti sotto soglia e ultimi movimenti.
+- **Prodotti**: tabella di tutti i prodotti con lo stato della scorta (OK / Sotto soglia) e inserimento di un nuovo prodotto.
+- **Registra movimento**: carico o scarico di un prodotto, con un pannello che mostra quantità, soglia, prezzo e valore della scorta aggiornati in tempo reale.
+- **Storico movimenti**: tutti i movimenti registrati, dal più recente.
+- **Avvisi**: conferma del movimento registrato e avviso quando un prodotto scende sotto la soglia minima.
+- **Controlli sui dati**: codice prodotto duplicato, prezzo e quantità non validi, scorta insufficiente per uno scarico.
+- **Salvataggio automatico** su file JSON. Console e WPF leggono e scrivono gli stessi dati.
+| Prodotti | Registra movimento | Storico movimenti |
+|---|---|---|
+| ![Prodotti](docs/screenshots/prodotti.png) | ![Registra movimento](docs/screenshots/registra-movimento.png) | ![Storico movimenti](docs/screenshots/storico.png) |
+ 
 ## Tecnologie
-
-- C# / .NET 8
-- Persistenza dati in formato JSON (`System.Text.Json`)
-
-## Come si esegue
-
-1. Aprire `GestioneMagazzino.sln` in Visual Studio (o editor equivalente)
-2. Impostare `GestioneMagazzino` come progetto di avvio
-3. Eseguire il progetto
-
-Al primo avvio verranno creati automaticamente due file, `prodotti.json` e `movimenti.json`, nella cartella di esecuzione: da quel momento i dati inseriti vengono ricaricati automaticamente ad ogni riavvio del programma.
-
-## Struttura del progetto
-
+ 
+- C# / .NET 10
+- WPF con pattern MVVM
+- System.Text.Json per la persistenza
+- Nullable reference types attivi in tutta la soluzione
+## Struttura della soluzione
+ 
 ```
-GestioneMagazzino/
-├── Models/          Entità del dominio (Prodotto, Movimento, Fornitore, enum, interfacce)
-├── Events/          Classi EventArgs per la comunicazione basata su eventi
-├── Repositories/    Repository generico per la gestione e persistenza dei dati
-├── Exceptions/       Eccezioni custom per i casi di errore del dominio
-├── Services/        Logica di business dell'applicazione
-└── Program.cs       Punto di ingresso e interfaccia a menu
+GestioneMagazzino.sln
+├── GestioneMagazzino.Core     Libreria con tutta la logica: modelli, servizi, repository, eventi, eccezioni
+├── GestioneMagazzino          Interfaccia console (menu testuale)
+├── GestioneMagazzino.Wpf      Interfaccia desktop (Views, ViewModels, Commands)
+└── GestioneMagazzino.Tests    Test automatici
 ```
-
-## Concetti C# dimostrati
-
-- **Programmazione a oggetti**: interfacce (`IIdentificabile`), incapsulamento, relazioni tra entità tramite identificatore (pattern simile a una chiave esterna di database, per evitare duplicazione dei dati tra `Prodotto` e `Movimento`)
-- **Generics**: `Repository<T>` è una classe generica riutilizzabile per qualsiasi entità che implementi `IIdentificabile`, usata sia per i prodotti sia per i movimenti senza duplicare codice
-- **Eventi e delegati**: il `ServizioMagazzino` espone eventi (`MovimentoRegistrato`, `ScortaBassa`) a cui l'interfaccia utente si iscrive, secondo il pattern publisher/subscriber, mantenendo la logica di business disaccoppiata dalla presentazione
-- **Gestione delle eccezioni**: eccezioni custom (`ScortaInsufficienteException`) per segnalare in modo esplicito gli errori di dominio, gestite senza mai interrompere l'esecuzione del programma
-- **File handling e serializzazione**: salvataggio e caricamento dello stato dell'applicazione tramite serializzazione JSON
-
-## Possibili sviluppi futuri
-
-- Interfaccia grafica (WPF)
-- Test automatizzati (xUnit)
-- Gestione fornitori collegata ai prodotti
+ 
+Il progetto è nato come applicazione console. Per aggiungere l'interfaccia grafica ho spostato la logica in una libreria separata (`Core`), così console e WPF la condividono senza duplicare codice.
+ 
+## Scelte tecniche
+ 
+**MVVM scritto a mano.** Non ho usato librerie MVVM: `ViewModelBase` (con `INotifyPropertyChanged`) e `RelayCommand` (con `ICommand`) sono scritti da me, per capire cosa fanno prima di affidarmi a un framework. La navigazione tra le pagine usa un `ContentControl` collegato al ViewModel corrente e un `DataTemplate` per ogni coppia ViewModel/View.
+ 
+**Un solo backend per due interfacce.** `ServizioMagazzino` contiene tutte le regole. Le interfacce si limitano a raccogliere i dati e a mostrare i risultati.
+ 
+**Eventi.** Il servizio pubblica due eventi, `MovimentoRegistrato` e `ScortaBassa`. La console li usa per stampare un messaggio, il ViewModel per mostrare conferma e avviso a video. Il servizio non sa chi lo ascolta.
+ 
+**Disiscrizione dagli eventi.** I ViewModel vengono ricreati a ogni cambio pagina, mentre il servizio vive quanto l'applicazione. Un ViewModel iscritto a un evento resterebbe in memoria e continuerebbe a rispondere anche dopo essere stato sostituito. Per questo il ViewModel implementa `IDisposable` e si disiscrive quando la pagina cambia.
+ 
+**Validazione su due livelli.** Il ViewModel controlla il formato (campo vuoto, testo che non è un numero). Il servizio controlla le regole di business (codice duplicato, prezzo o quantità non validi, scorta insufficiente) e le segnala con eccezioni, alcune delle quali personalizzate (`ScortaInsufficienteException`, `ProdottoGiaEsistenteException`). In questo modo le regole valgono allo stesso modo per console e WPF.
+ 
+**Repository generico.** `Repository<T>` gestisce qualsiasi entità che implementi `IIdentificabile` e si occupa di salvataggio e caricamento su file JSON.
+ 
+## Come eseguirlo
+ 
+Requisiti: Windows e .NET 10 SDK.
+ 
+```
+git clone <URL-DEL-REPOSITORY>
+cd GestioneMagazzino
+```
+ 
+Interfaccia desktop:
+ 
+```
+dotnet run --project GestioneMagazzino.Wpf
+```
+ 
+Interfaccia console:
+ 
+```
+dotnet run --project GestioneMagazzino
+```
+ 
+Test:
+ 
+```
+dotnet test
+```
+ 
+I dati vengono salvati in `%LocalAppData%\GestioneMagazzino` (`prodotti.json` e `movimenti.json`).
+ 
+## Possibili sviluppi
+ 
+- Modifica ed eliminazione dei prodotti.
+- Ricerca e filtri nelle tabelle.
+- Stato della voce selezionata nel menu gestito dal ViewModel invece che dalla View.
+ 
