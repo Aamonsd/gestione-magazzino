@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="GestioneMagazzino.Wpf.Views.NuovoProdottoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GestioneMagazzino.Wpf.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <StackPanel Margin="44,40,44,40">
+        <TextBlock Text="Nuovo prodotto" FontSize="28" FontWeight="Bold" Foreground="#14213D" Margin="0,0,0,4"/>
+        <TextBlock Text="Inserisci i dati del nuovo prodotto" FontSize="14" Foreground="#6B7280"/>
+        <Border Style="{StaticResource CardBorder}" Width="560" HorizontalAlignment="Left" Margin="0,24,0,0" Padding="32">
+            <StackPanel >
+                <TextBlock Text="Codice" FontSize="13" FontWeight="SemiBold" Foreground="#14213D" Margin="0,0,0,8"/>
+                <TextBox Text="{Binding Codice,UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,22" Padding="14,12" BorderBrush="#D7DBE2" BorderThickness="1"/>
+                <TextBlock Text="Nome" FontSize="13" FontWeight="SemiBold" Foreground="#14213D" Margin="0,0,0,8"/>
+                <TextBox Text="{Binding Nome, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,22" Padding="14,12" BorderBrush="#D7DBE2" BorderThickness="1" />
+                <TextBlock Text="Prezzo unitario (€)" FontSize="13" FontWeight="SemiBold" Foreground="#14213D" Margin="0,0,0,8" />
+                <TextBox Text="{Binding Prezzo,UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,22" Padding="14,12" BorderBrush="#D7DBE2" BorderThickness="1"/>
+                <TextBlock Text="Soglia minima" FontSize="13" FontWeight="SemiBold" Foreground="#14213D" Margin="0,0,0,8"/>
+                <TextBox Text="{Binding SogliaMinima,UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,22" Padding="14,12" BorderBrush="#D7DBE2" BorderThickness="1"/>
+                <TextBlock Text="{Binding MessaggioErrore}" FontSize="13" Margin="0,8,0,8"  Foreground="#C0392B"/>
+                <Button Style="{StaticResource PulsantePrimario}" Content="Salva" Command="{Binding SalvaCommand}" HorizontalAlignment="Left" />
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

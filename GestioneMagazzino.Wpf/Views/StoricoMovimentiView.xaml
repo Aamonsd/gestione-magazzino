@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="GestioneMagazzino.Wpf.Views.StoricoMovimentiView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GestioneMagazzino.Wpf.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="44,40,44,40">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Storico movimenti" FontSize="28" FontWeight="Bold" Foreground="#14213D" Margin="0,0,0,4"/>
+        <TextBlock Grid.Row="1" Text="Tutti i carichi e gli scarichi registrati" FontSize="14" Foreground="#6B7280"/>
+
+        <Border Grid.Row="2" Style="{StaticResource CardBorder}" Padding="0" Margin="0,24,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                
+                <Border Grid.Row="0" Background="#FAFBFC" Padding="24,16" BorderBrush="#E3E6EB" BorderThickness="0,0,0,1" CornerRadius="12,12,0,0" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Data" FontSize="12" FontWeight="SemiBold" Foreground="#6B7280"/>
+                        <TextBlock Grid.Column="1" Text="Movimento" FontSize="12" FontWeight="SemiBold" Foreground="#6B7280"/>
+                        <TextBlock Grid.Column="2" Text="Prodotto" FontSize="12" FontWeight="SemiBold" Foreground="#6B7280"/>
+                        <TextBlock Grid.Column="3" Text="Tipo" FontSize="12" FontWeight="SemiBold" Foreground="#6B7280"/>
+                        <TextBlock Grid.Column="4" Text="Quantità" FontSize="12" FontWeight="SemiBold" Foreground="#6B7280" TextAlignment="Right"/>
+
+                    </Grid>
+                </Border>
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding ListaMovimenti}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="24,16" BorderBrush="#EEF0F3" BorderThickness="0,0,0,1">
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="160"/>
+                                            <ColumnDefinition Width="110"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" Text="{Binding Data,StringFormat='dd/MM/yyyy HH:mm'}" FontSize="13" Foreground="#6B7280" FontFamily="Consolas" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Idmovimento}" FontSize="14" Foreground="#14213D" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding NomeProdotto}" FontSize="14" FontWeight="SemiBold" Foreground="#14213D" VerticalAlignment="Center"/>
+                                        <Border Grid.Column="3" CornerRadius="999" Padding="10,3" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Background" Value="#E8F5E9"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Tipo}" Value="Scarico">
+                                                            <Setter Property="Background" Value="#FDEDEC"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+
+                                            <TextBlock Text="{Binding Tipo}" FontSize="12" FontWeight="SemiBold">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Foreground" Value="#2F855A"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Tipo}" Value="Scarico">
+                                                                <Setter Property="Foreground" Value="#C0392B"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Border>
+                                        <TextBlock Grid.Column="4" Text="{Binding Quantita}" FontSize="14" Foreground="#14213D" VerticalAlignment="Center" TextAlignment="Right"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+            </Grid>
+            
+            
+        </Border>
+
+    </Grid>
+</UserControl>

@@ -1,27 +1,38 @@
-
-using System;
-using GestioneMagazzino.Models;
 using GestioneMagazzino.Events;
 using GestioneMagazzino.Exceptions;
+using GestioneMagazzino.Models;
 using GestioneMagazzino.Repositories;
-using System.Net.Http.Headers;
+
+
 
 namespace GestioneMagazzino.Services
 {
+    
     public class ServizioMagazzino
     {
-        private const string PercorsoProdotti = "prodotti.json";
-        private const string PercorsoMovimenti = "movimenti.json";
+        private static readonly string CartellaDati = Path.Combine(Environment
+            .GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GestioneMagazzino");
+
+        private static readonly string PercorsoProdotti = Path.Combine(CartellaDati,"prodotti.json");
+        private static readonly string PercorsoMovimenti = Path.Combine(CartellaDati, "movimenti.json");
+
         private Repository<Prodotto> repositoryProdotti = new Repository<Prodotto>();
         private Repository<Movimento> repositoryMovimenti = new Repository<Movimento>();
 
-        private int ContatoreMovimenti = 0;
+        private int contatoreMovimenti = 0;
 
-        public event EventHandler<ScortaBassaEventArgs> ScortaBassa;
-        public event EventHandler<MovimentoRegistratoEventArgs> MovimentoRegistrato;
+        public event EventHandler<ScortaBassaEventArgs>? ScortaBassa;
+        public event EventHandler<MovimentoRegistratoEventArgs>? MovimentoRegistrato;
+
+        public ServizioMagazzino()
+        {
+            Directory.CreateDirectory(CartellaDati);
+        }
 
         public Movimento RegistraMovimento(Prodotto prodotto, TipoMovimento tipo,int quantita)
         {
+            if (quantita <= 0) throw new ArgumentException("La quantità deve essere maggiore di zero");
+
             if (tipo == TipoMovimento.Scarico)
             {
                 if (prodotto.QuantitaAttuale < quantita)
@@ -35,11 +46,11 @@ namespace GestioneMagazzino.Services
             else if (tipo == TipoMovimento.Scarico) prodotto.QuantitaAttuale -= quantita;
 
             //GENERA ID UNIVICO PER IL MOVIMENTO
-            ContatoreMovimenti++;
-            string ID = "MOV-" + ContatoreMovimenti;
+            contatoreMovimenti++;
+            string id = "MOV-" + contatoreMovimenti;
 
             //CREA UN NUOVO MOVIMENTO
-            Movimento newMovimento = new Movimento(ID, prodotto.CodiceProdotto, tipo, quantita);
+            Movimento newMovimento = new Movimento(id, prodotto.CodiceProdotto, tipo, quantita);
 
             //MOVIMENTO AGGIUNTO ALLA REPOSITORY
             repositoryMovimenti.Aggiungi(newMovimento);
@@ -61,6 +72,15 @@ namespace GestioneMagazzino.Services
 
         public void AggiungiProdotto(Prodotto prodotto)
         {
+            List<Prodotto> listaProdotti = repositoryProdotti.OttieniTutti();
+
+            if (listaProdotti.Any(p => string.Equals(p.CodiceProdotto, prodotto.CodiceProdotto, StringComparison.OrdinalIgnoreCase)))
+                throw new ProdottoGiaEsistenteException($"Esiste già un prodotto con codice {prodotto.CodiceProdotto}");
+
+            if (prodotto.PrezzoUnitario <= 0) throw new ArgumentException("Prezzo non puo essere minore o uguale a 0");
+
+            if (prodotto.SogliaMinima < 0) throw new ArgumentException("La soglia non puo essere minore di 0");
+
             repositoryProdotti.Aggiungi(prodotto);
             SalvaDati();
         }
@@ -94,11 +114,11 @@ namespace GestioneMagazzino.Services
         {
             repositoryProdotti.CaricaFile(PercorsoProdotti);
             repositoryMovimenti.CaricaFile(PercorsoMovimenti);
-            ContatoreMovimenti = 0;
+            contatoreMovimenti = 0;
             foreach (var item in repositoryMovimenti.OttieniTutti())
             {
                 int numero = int.Parse(item.Identificatore.Replace("MOV-", ""));
-                if (numero > ContatoreMovimenti) ContatoreMovimenti = numero;
+                if (numero > contatoreMovimenti) contatoreMovimenti = numero;
             }
         }
 

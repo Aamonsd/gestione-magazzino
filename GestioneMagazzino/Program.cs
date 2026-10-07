@@ -1,12 +1,12 @@
 
+using GestioneMagazzino.Events;
+using GestioneMagazzino.Exceptions;
 using GestioneMagazzino.Models;
 using GestioneMagazzino.Services;
-using GestioneMagazzino.Exceptions;
-using GestioneMagazzino.Events;
-using GestioneMagazzino.Repositories;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design;
-using System.Runtime.CompilerServices;
+
+
+
+
 
 namespace GestioneMagazzino
 {
@@ -55,20 +55,37 @@ namespace GestioneMagazzino
                 {
                     case "1":
 
+                        try
+                        {
+                            Console.WriteLine("Inserisci codice prodotto:");
+                            string codice = Console.ReadLine();
+                            Console.WriteLine("Inserisci nome prodotto:");
+                            string nome = Console.ReadLine();
+                            Console.WriteLine("Inserisci prezzo unitario:");
+                            decimal prezzo = decimal.Parse(Console.ReadLine());
+                            Console.WriteLine("Inserisci soglia minima:");
+                            int soglia = int.Parse(Console.ReadLine());
 
-                        Console.WriteLine("Inserisci codice prodotto:");
-                        string codice = Console.ReadLine();
-                        Console.WriteLine("Inserisci nome prodotto:");
-                        string nome = Console.ReadLine();
-                        Console.WriteLine("Inserisci prezzo unitario:");
-                        decimal prezzo = decimal.Parse(Console.ReadLine());
-                        Console.WriteLine("Inserisci soglia minima:");
-                        int soglia = int.Parse(Console.ReadLine());
+                            Prodotto prodotto = new Prodotto(codice, nome, prezzo, soglia);
+                            servizio.AggiungiProdotto(prodotto);
 
-                        Prodotto prodotto = new Prodotto(codice, nome, prezzo, soglia);
-                        servizio.AggiungiProdotto(prodotto);
-                        Console.WriteLine("prodotto Aggiungi");
+                            Console.WriteLine("Prodotto aggiunto");
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine("Errore: prezzo e soglia devono essere numeri validi (es. prezzo 2,50 e soglia 10)");
+                        }
+                        catch (ProdottoGiaEsistenteException ex)
+                        {
+                            Console.WriteLine("Errore: " + ex.Message);
+                        }
+                        catch (ArgumentException ex)
+                        {
+                            Console.WriteLine("Errore: " + ex.Message);
+                        }
                         break;
+
+
 
                     case "2":
                         try
@@ -119,20 +136,24 @@ namespace GestioneMagazzino
                         {
                             Console.WriteLine("Errore: "+ex.Message);
                         }
+                        catch (ArgumentException ex)
+                        {
+                            Console.WriteLine("Errore: "+ex.Message);
+                        }
                         
                         
                         break;
 
                     case "3":
                         Console.WriteLine("visualizza prodotti");
-                        List<Prodotto> VisualizzaLista=servizio.OttieniProdotti();
+                        List<Prodotto> listaProdotti=servizio.OttieniProdotti();
 
-                        if (VisualizzaLista.Count == 0)
+                        if (listaProdotti.Count == 0)
                         {
                             Console.WriteLine("Nessun dato disponibile");
                         }
 
-                        foreach (var item in VisualizzaLista)
+                        foreach (var item in listaProdotti)
                         {
                             Console.WriteLine($"ID: {item.CodiceProdotto}, Nome: {item.Nome}, Prezzo unitario: {item.PrezzoUnitario}, Soglia:{item.SogliaMinima} ");
                         }
@@ -140,14 +161,14 @@ namespace GestioneMagazzino
 
                     case "4":
                         Console.WriteLine("visualizza movimenti");
-                        List<Movimento> VisualizzaStoricoMovimenti = servizio.OttieniMovimenti();
+                        List<Movimento> storicoMovimenti = servizio.OttieniMovimenti();
                        
-                        if (VisualizzaStoricoMovimenti.Count == 0)
+                        if (storicoMovimenti.Count == 0)
                         {
                             Console.WriteLine("Nessun dato disponibile");
                         }
 
-                        foreach (var item in VisualizzaStoricoMovimenti)
+                        foreach (var item in storicoMovimenti)
                         {
                             Console.WriteLine($"Nome Prodotto: {servizio.TrovaProdotto(item.CodiceProdotto).Nome}, tipo Movimento: {item.Tipo} ,quantita: {item.Quantita}");
                         }

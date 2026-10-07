@@ -16,7 +16,7 @@ namespace GestioneMagazzino.Repositories
         {
             foreach (var item in lista)
             {
-                if (item.Identificatore == id) return item;
+                if (string.Equals(item.Identificatore, id, StringComparison.OrdinalIgnoreCase)) return item;
             }
             throw new InvalidOperationException("elemento non trovato");
         }
@@ -24,10 +24,10 @@ namespace GestioneMagazzino.Repositories
         public void RimuoviPerIdentificatore(string id)
         {
 
-            T elementoTrovato = default;
+            T? elementoTrovato = default;
             foreach (var item in lista)
             {
-                if (item.Identificatore == id)
+                if (string.Equals(item.Identificatore, id, StringComparison.OrdinalIgnoreCase))
                 {
                     elementoTrovato = item;
                     break;
@@ -60,8 +60,15 @@ namespace GestioneMagazzino.Repositories
             if (!File.Exists(percorso)) return;
 
             string json = File.ReadAllText(percorso);
-            List<T> listaCaricata = JsonSerializer.Deserialize<List<T>>(json);
-            lista = listaCaricata;
+            List<T>? listaCaricata = JsonSerializer.Deserialize<List<T>>(json);
+            if (listaCaricata == null)
+            {
+                lista = new List<T>();
+            }
+            else
+            {
+                lista = listaCaricata;
+            }
         }
 
 
