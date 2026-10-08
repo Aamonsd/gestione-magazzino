@@ -38,7 +38,7 @@
 
                     <StackPanel  Margin="0,0,0,22">
                         <TextBlock Text="Prodotto" FontSize="13" FontWeight="SemiBold" Foreground="#14213D" Margin="0,0,0,8"/>
-                        <ComboBox ItemsSource="{Binding ListaProdotti}" SelectedItem="{Binding ProdottoSelezionato}" FontSize="14" Padding="14,12">
+                        <ComboBox ItemsSource="{Binding ListaProdotti}" SelectedItem="{Binding ProdottoSelezionato}" Style="{StaticResource CampoScelta}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
