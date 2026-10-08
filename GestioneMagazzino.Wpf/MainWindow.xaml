@@ -43,11 +43,24 @@
 
         <!-- Sidebar -->
         <StackPanel Margin="16,28,16,0">
-            <TextBlock Text="Magazzino" FontSize="17" FontWeight="Bold" Foreground="White" Margin="8,0,0,32" FontFamily="{StaticResource FontTitoli}"/>
-            <RadioButton Content="Dashboard" Command="{Binding MostraDashboardCommand}" Style="{StaticResource VoceMenu}" IsChecked="True"/>
-            <RadioButton Content="Prodotti" Command="{Binding MostraProdottiCommand}" Style="{StaticResource VoceMenu}"/>
-            <RadioButton Content="Registra movimento" Command="{Binding MostraRegistraMovimentoCommand}" Style="{StaticResource VoceMenu}"/>
-            <RadioButton Content="Storico movimenti" Command="{Binding MostraStoricoMovimentiCommand}" Style="{StaticResource VoceMenu}"/>
+            <StackPanel Orientation="Horizontal" Margin="8,0,0,32">
+                <Border Width="32" Height="32" CornerRadius="8" Background="#2B6CB0">
+                    <Viewbox Width="18" Height="18">
+                        <Canvas Width="24" Height="24">
+                            <Path Data="{StaticResource IconaLogo}" Stroke="White" StrokeThickness="2"
+                          StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"/>
+                        </Canvas>
+                    </Viewbox>
+                </Border>
+                <TextBlock Text="Magazzino" FontSize="17" FontWeight="Bold" Foreground="White"
+                   FontFamily="{StaticResource FontTitoli}"
+                   Margin="10,0,0,0" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <RadioButton Content="Dashboard" Command="{Binding MostraDashboardCommand}" Style="{StaticResource VoceMenu}" IsChecked="True" Tag="{StaticResource IconaDashboard}"/>
+            <RadioButton Content="Prodotti" Command="{Binding MostraProdottiCommand}" Style="{StaticResource VoceMenu}" Tag="{StaticResource IconaProdotti}"/>
+            <RadioButton Content="Registra movimento" Command="{Binding MostraRegistraMovimentoCommand}" Style="{StaticResource VoceMenu}" Tag="{StaticResource IconaRegistra}"/>
+            <RadioButton Content="Storico movimenti" Command="{Binding MostraStoricoMovimentiCommand}" Style="{StaticResource VoceMenu}" Tag="{StaticResource IconaStorico}"/>
         </StackPanel>
 
         <ContentControl Grid.Column="1" Content="{Binding ViewModelCorrente}"/>
