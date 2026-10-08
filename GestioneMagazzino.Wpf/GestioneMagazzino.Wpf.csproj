@@ -9,7 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\SpaceGrotesk-Bold.ttf" />
+    <None Remove="Fonts\SpaceGrotesk-SemiBold.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GestioneMagazzino.Core\GestioneMagazzino.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\SpaceGrotesk-Bold.ttf" />
+    <Resource Include="Fonts\SpaceGrotesk-SemiBold.ttf" />
   </ItemGroup>
 
 </Project>

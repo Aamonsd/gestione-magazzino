@@ -43,7 +43,7 @@
 
         <!-- Sidebar -->
         <StackPanel Margin="16,28,16,0">
-            <TextBlock Text="Magazzino" FontSize="17" FontWeight="Bold" Foreground="White" Margin="8,0,0,32"/>
+            <TextBlock Text="Magazzino" FontSize="17" FontWeight="Bold" Foreground="White" Margin="8,0,0,32" FontFamily="{StaticResource FontTitoli}"/>
             <RadioButton Content="Dashboard" Command="{Binding MostraDashboardCommand}" Style="{StaticResource VoceMenu}" IsChecked="True"/>
             <RadioButton Content="Prodotti" Command="{Binding MostraProdottiCommand}" Style="{StaticResource VoceMenu}"/>
             <RadioButton Content="Registra movimento" Command="{Binding MostraRegistraMovimentoCommand}" Style="{StaticResource VoceMenu}"/>

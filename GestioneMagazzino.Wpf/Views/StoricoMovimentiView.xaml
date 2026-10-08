@@ -14,7 +14,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Storico movimenti" FontSize="28" FontWeight="Bold" Foreground="#14213D" Margin="0,0,0,4"/>
+        <TextBlock Text="Storico movimenti" Style="{StaticResource TitoloPagine}"/>
         <TextBlock Grid.Row="1" Text="Tutti i carichi e gli scarichi registrati" FontSize="14" Foreground="#6B7280"/>
 
         <Border Grid.Row="2" Style="{StaticResource CardBorder}" Padding="0" Margin="0,24,0,0">

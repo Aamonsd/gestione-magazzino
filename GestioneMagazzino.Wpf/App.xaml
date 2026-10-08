@@ -4,12 +4,22 @@
              xmlns:local="clr-namespace:GestioneMagazzino.Wpf"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <FontFamily x:Key="FontTitoli">pack://application:,,,/Fonts/#Space Grotesk</FontFamily>
         <Style x:Key="TextBlockSideBar" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#A9B4C9"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Margin" Value="0,0,0,4"/>
             <Setter Property="Padding" Value="12,11"/>
             <Setter Property="FontWeight" Value="Medium"/>
+        </Style>
+
+        <Style x:Key="TitoloPagine" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#14213D"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+            <Setter Property="FontFamily" Value="{StaticResource FontTitoli}"/>
+
         </Style>
 
         <Style x:Key="CardBorder" TargetType="Border">
@@ -30,6 +40,7 @@
             <Setter Property="FontSize" Value="30"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Foreground" Value="#14213D"/>
+            <Setter Property="FontFamily" Value="{StaticResource FontTitoli}"/>
         </Style>
 
         <Style x:Key="VoceMenu" TargetType="RadioButton">

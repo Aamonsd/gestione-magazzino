@@ -15,8 +15,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        
-        <TextBlock Grid.Row="0" Text="Prodotti" FontSize="28" FontWeight="Bold" Foreground="#14213D" Margin="0,0,0,4"/>
+
+        <TextBlock Grid.Row="0" Text="Prodotti" Style="{StaticResource TitoloPagine}"/>
         <TextBlock Grid.Row="1" Text="Elenco completo dei prodotti a magazzino" FontSize="14" Foreground="#6B7280"/>
         <Button Grid.Row="0" Grid.RowSpan="2" Content="Aggiungi prodotto" Style="{StaticResource PulsantePrimario}" HorizontalAlignment="Right" VerticalAlignment="Center" Command="{Binding AggiungiProdottoCommand}"/>
         <!-- Card della tabella:-->

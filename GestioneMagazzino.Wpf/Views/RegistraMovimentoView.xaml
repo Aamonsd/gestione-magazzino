@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel>
-            <TextBlock Text="Registra movimento" FontSize="28" FontWeight="Bold" Foreground="#14213D" Margin="0,0,0,4"/>
+            <TextBlock Text="Registra movimento" Style="{StaticResource TitoloPagine}"/>
             <TextBlock Text="Registra un carico o uno scarico di magazzino" FontSize="14" Foreground="#6B7280"/>
         </StackPanel>
         
@@ -87,7 +87,7 @@
 
             <Border Grid.Column="2" Style="{StaticResource CardBorder}" Padding="28">
                 <StackPanel>
-                    <TextBlock Text="PRODOTTO SELEZIONATO" FontSize="13" FontWeight="SemiBold" Foreground="#6B7280" Margin="0,0,0,18"/>
+                    <TextBlock Text="PRODOTTO SELEZIONATO" FontSize="13" FontWeight="SemiBold" Foreground="#6B7280" Margin="0,0,0,18" Style="{StaticResource TitoloPagine}"/>
                     <TextBlock Text="{Binding ProdottoSelezionato.Nome}" FontSize="20" FontWeight="Bold" Foreground="#14213D"/>
                     <TextBlock Text="{Binding ProdottoSelezionato.Codice}" FontSize="13" FontFamily="Consolas" Foreground="#6B7280" Margin=" 0,0,0,18"/>
                     <Grid Margin="0,0,0,18">

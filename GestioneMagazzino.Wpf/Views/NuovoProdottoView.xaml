@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <StackPanel Margin="44,40,44,40">
-        <TextBlock Text="Nuovo prodotto" FontSize="28" FontWeight="Bold" Foreground="#14213D" Margin="0,0,0,4"/>
+        <TextBlock Text="Nuovo prodotto" Style="{StaticResource TitoloPagine}"/>
         <TextBlock Text="Inserisci i dati del nuovo prodotto" FontSize="14" Foreground="#6B7280"/>
         <Border Style="{StaticResource CardBorder}" Width="560" HorizontalAlignment="Left" Margin="0,24,0,0" Padding="32">
             <StackPanel >
