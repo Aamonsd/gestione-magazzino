@@ -15,7 +15,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
-        <StackPanel Margin="44,40,44,40">
+        <StackPanel>
             <TextBlock Text="Dashboard" Style="{StaticResource TitoloPagine}"/>
             <TextBlock Text="Panoramica generale del magazzino" FontSize="14" Foreground="#6B7280"/>
         </StackPanel>
