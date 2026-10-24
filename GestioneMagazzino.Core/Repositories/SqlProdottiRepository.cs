@@ -1,11 +1,8 @@
 ﻿using GestioneMagazzino.Models;
-using GestioneMagazzino.Repositories;
 using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Text;
+ 
 
-namespace GestioneMagazzino.Core.Repositories
+namespace GestioneMagazzino.Repositories
 {
     public class SqlProdottiRepository : IProdottiRepository
     {
@@ -15,6 +12,13 @@ namespace GestioneMagazzino.Core.Repositories
         public SqlProdottiRepository(string stringaConnessione)
         {
             this.stringaConnessione = stringaConnessione;
+        }
+
+        private static Prodotto LeggiProdotto(SqlDataReader lettore)
+        {
+            var prodotto = new Prodotto(lettore.GetString(0), lettore.GetString(1), lettore.GetDecimal(2), lettore.GetInt32(4));
+            prodotto.QuantitaAttuale = lettore.GetInt32(3);
+            return prodotto;
         }
 
         public void Aggiungi(Prodotto nuovo)
@@ -38,8 +42,6 @@ namespace GestioneMagazzino.Core.Repositories
 
             comando.ExecuteNonQuery();
 
-
-
         }
 
         public List<Prodotto> OttieniTutti()
@@ -52,11 +54,10 @@ namespace GestioneMagazzino.Core.Repositories
             using var comando = new SqlCommand(
                 "SELECT CodiceProdotto, Nome, PrezzoUnitario, QuantitaAttuale, SogliaMinima FROM Prodotti", connessione);
             using var lettore = comando.ExecuteReader();
+
             while (lettore.Read())
             {
-                var prodotto = new Prodotto(lettore.GetString(0), lettore.GetString(1), lettore.GetDecimal(2), lettore.GetInt32(4));
-                prodotto.QuantitaAttuale = lettore.GetInt32(3);
-                prodotti.Add(prodotto);
+                prodotti.Add(LeggiProdotto(lettore));
             }
             return prodotti;
         }
@@ -64,7 +65,7 @@ namespace GestioneMagazzino.Core.Repositories
         public Prodotto? TrovaPerCodice(string codice)
         {
 
-            var connessione = new SqlConnection(stringaConnessione);
+            using var connessione = new SqlConnection(stringaConnessione);
             connessione.Open();
 
             using var comando = new SqlCommand(
@@ -75,11 +76,9 @@ namespace GestioneMagazzino.Core.Repositories
             using var lettore = comando.ExecuteReader();
             if (lettore.Read())
             {
-                var prodotto = new Prodotto(lettore.GetString(0), lettore.GetString(1), lettore.GetDecimal(2), lettore.GetInt32(4));
-                prodotto.QuantitaAttuale = lettore.GetInt32(3);
-                return prodotto;
-            } else
-                return null;
+                return LeggiProdotto(lettore);
+            }
+            return null;
            
 
         }
