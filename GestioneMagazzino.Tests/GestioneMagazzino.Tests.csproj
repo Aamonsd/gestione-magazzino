@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GestioneMagazzino\GestioneMagazzino.csproj" />
+    <ProjectReference Include="..\GestioneMagazzino.Core\GestioneMagazzino.Core.csproj" />
   </ItemGroup>
 
 </Project>
