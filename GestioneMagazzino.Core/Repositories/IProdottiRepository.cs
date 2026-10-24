@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GestioneMagazzino.Models;
+﻿using GestioneMagazzino.Models;
 
-namespace GestioneMagazzino.Core.Repositories
+namespace GestioneMagazzino.Repositories
 {
     public interface IProdottiRepository
     {
