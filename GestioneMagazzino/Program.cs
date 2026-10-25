@@ -2,7 +2,9 @@
 using GestioneMagazzino.Events;
 using GestioneMagazzino.Exceptions;
 using GestioneMagazzino.Models;
+using GestioneMagazzino.Repositories;
 using GestioneMagazzino.Services;
+using Microsoft.Extensions.Configuration;
 
 
 
@@ -12,9 +14,8 @@ namespace GestioneMagazzino
 {
     public class Program
     {
+        private static ServizioMagazzino servizio=null!;
 
-        
-        private static ServizioMagazzino servizio = new ServizioMagazzino();
         public static void MovimentoRegistratoHandler(object sender,MovimentoRegistratoEventArgs e)
         {
             Prodotto prodotto = servizio.TrovaProdotto(e.Movimento.CodiceProdotto);
@@ -27,17 +28,27 @@ namespace GestioneMagazzino
         }
 
         public static void Main(string[] args)
-        {
 
-            
+        {
+            IConfiguration configurazione = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false)
+                .Build();
+
+            string stringaConnessione = configurazione.GetConnectionString("Magazzino")
+            ?? throw new InvalidOperationException("Stringa di connessione 'Magazzino' mancante in appsettings.json");
+
+            servizio = new ServizioMagazzino(
+                new SqlProdottiRepository(stringaConnessione), 
+                new SqlMovimentiRepository(stringaConnessione));
+
+
             servizio.MovimentoRegistrato += MovimentoRegistratoHandler;
             servizio.ScortaBassa += ScortaBassaHandler;
             string choose = "";
             string rispostaTipo = "";
             TipoMovimento tipo = TipoMovimento.Carico;
-            servizio.CaricaDati();
-            
-
+           
             Console.WriteLine
             ("=== GESTIONE MAGAZZINO ===\n" +
             "1. Aggiungi prodotto\n" +
