@@ -89,7 +89,7 @@
                 <StackPanel>
                     <TextBlock Text="PRODOTTO SELEZIONATO" FontSize="13" FontWeight="SemiBold" Foreground="#6B7280" Margin="0,0,0,18" Style="{StaticResource TitoloPagine}"/>
                     <TextBlock Text="{Binding ProdottoSelezionato.Nome}" FontSize="20" FontWeight="Bold" Foreground="#14213D"/>
-                    <TextBlock Text="{Binding ProdottoSelezionato.Codice}" FontSize="13" FontFamily="Consolas" Foreground="#6B7280" Margin=" 0,0,0,18"/>
+                    <TextBlock Text="{Binding ProdottoSelezionato.CodiceProdotto}" FontSize="13" FontFamily="Consolas" Foreground="#6B7280" Margin=" 0,0,0,18"/>
                     <Grid Margin="0,0,0,18">
                         <TextBlock Text="Quantita attuale" FontSize="13" Foreground="#6B7280" />
                         <TextBlock Text="{Binding ProdottoSelezionato.QuantitaAttuale}" FontSize="13" Foreground="#14213D" FontWeight="SemiBold" HorizontalAlignment="Right"/>
