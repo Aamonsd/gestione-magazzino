@@ -58,7 +58,7 @@
                                         </Grid.ColumnDefinitions>
 
                                         <TextBlock Grid.Column="0" Text="{Binding Data,StringFormat='dd/MM/yyyy HH:mm'}" FontSize="13" Foreground="#6B7280" FontFamily="Consolas" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Column="1" Text="{Binding Idmovimento}" FontSize="14" Foreground="#14213D" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding IdMovimento}" FontSize="14" Foreground="#14213D" VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="2" Text="{Binding NomeProdotto}" FontSize="14" FontWeight="SemiBold" Foreground="#14213D" VerticalAlignment="Center"/>
                                         <Border Grid.Column="3" CornerRadius="999" Padding="10,3" HorizontalAlignment="Left" VerticalAlignment="Center">
                                             <Border.Style>
