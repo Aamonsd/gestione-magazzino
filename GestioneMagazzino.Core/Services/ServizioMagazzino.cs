@@ -1,7 +1,7 @@
 using GestioneMagazzino.Events;
 using GestioneMagazzino.Models;
 using GestioneMagazzino.Repositories;
-
+using GestioneMagazzino.Exceptions;
 namespace GestioneMagazzino.Services
 {
     
@@ -45,13 +45,15 @@ namespace GestioneMagazzino.Services
 
         public void AggiungiProdotto(Prodotto prodotto)
         {
-            List<Prodotto> listaProdotti = repositoryProdotti.OttieniTutti();
 
-            if (repositoryProdotti.TrovaPerCodice(prodotto.CodiceProdotto) != null) 
+            if (repositoryProdotti.TrovaPerCodice(prodotto.CodiceProdotto) != null)
+                throw new ProdottoGiaEsistenteException($"Esiste già un prodotto con codice {prodotto.CodiceProdotto}");
 
-            if (prodotto.PrezzoUnitario <= 0) throw new ArgumentException("Prezzo non puo essere minore o uguale a 0");
+            if (prodotto.PrezzoUnitario <= 0) 
+                throw new ArgumentException("Prezzo non puo essere minore o uguale a 0");
 
-            if (prodotto.SogliaMinima < 0) throw new ArgumentException("La soglia non puo essere minore di 0");
+            if (prodotto.SogliaMinima < 0) 
+                throw new ArgumentException("La soglia non puo essere minore di 0");
 
             repositoryProdotti.Aggiungi(prodotto);
              
@@ -67,7 +69,7 @@ namespace GestioneMagazzino.Services
         public Prodotto TrovaProdotto(string codice)
         {
             Prodotto? prodottoTrovato = repositoryProdotti.TrovaPerCodice(codice);
-            if (prodottoTrovato is null) throw new ArgumentException("prodotto non trovato");
+            if (prodottoTrovato is null) throw new ArgumentException("Prodotto non trovato");
             return prodottoTrovato;
              
         }
