@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:GestioneMagazzino.Wpf">
 
     <Application.Resources>
-        <FontFamily x:Key="FontTitoli">pack://application:,,,/Fonts/#Space Grotesk</FontFamily>
+        <FontFamily x:Key="FontTitoli">pack://application:,,,/Fonts/#Public Sans</FontFamily>
         
         <Geometry x:Key="IconaLogo">M3,7 L12,3 L21,7 L12,11 Z M3,12 L12,16 L21,12 M3,17 L12,21 L21,17</Geometry>
         <Geometry x:Key="IconaDashboard">M3,3 H10 V10 H3 Z M14,3 H21 V10 H14 Z M3,14 H10 V21 H3 Z M14,14 H21 V21 H14 Z</Geometry>

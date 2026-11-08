@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Fonts\SpaceGrotesk-Bold.ttf" />
-    <None Remove="Fonts\SpaceGrotesk-SemiBold.ttf" />
+    <None Remove="Fonts\PublicSans-Bold.ttf" />
+    <None Remove="Fonts\PublicSans-SemiBold.ttf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Fonts\SpaceGrotesk-Bold.ttf" />
-    <Resource Include="Fonts\SpaceGrotesk-SemiBold.ttf" />
+    <Resource Include="Fonts\PublicSans-Bold.ttf" />
+    <Resource Include="Fonts\PublicSans-SemiBold.ttf" />
   </ItemGroup>
 
   <ItemGroup>
